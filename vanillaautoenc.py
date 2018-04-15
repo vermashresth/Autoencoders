@@ -52,7 +52,7 @@ model = Model(input=inputs, output=decoded)
 encoder = Model(inputs, encoded)
 model.compile(optimizer='adam', loss='binary_crossentropy')
 print model.summary()
-model.fit(X, X, batch_size=64, nb_epoch=1)
+model.fit(X, X, batch_size=64, nb_epoch=5)
 
 
 model.save("/media/petrichor/data/future/autoencoders/model")
