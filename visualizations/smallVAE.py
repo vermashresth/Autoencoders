@@ -12,7 +12,7 @@ batch_size = 100
 original_dim = 784
 latent_dim = 2
 intermediate_dim = 256
-epochs = 10
+epochs = 4
 epsilon_std = 1.0
 
 
@@ -71,7 +71,41 @@ vae.save("/media/petrichor/data/future/autoencoders/visualizations/weights/small
 encoder.save("/media/petrichor/data/future/autoencoders/visualizations/weights/smallencoderVAE")
 # display a 2D plot of the digit classes in the latent space
 x_test_encoded = encoder.predict(x_test, batch_size=batch_size)
-plt.figure(figsize=(6, 6))
-plt.scatter(x_test_encoded[:, 0], x_test_encoded[:, 1], c=y_test)
-plt.colorbar()
-plt.show()
+# plt.figure(figsize=(6, 6))
+# plt.scatter(x_test_encoded[:, 0], x_test_encoded[:, 1], c=y_test)
+# plt.colorbar()
+# plt.show()
+
+
+randomimages = x_test[:10000]
+labels = y_test[:10000]
+
+input = randomimages.reshape(10000,784)
+encoded = encoder.predict(input)
+encoded = encoded.reshape(10000,2)
+
+# encodedVAE = encoderVAE.predict(input)
+# encodedVAE= encodedVAE.reshape(1000,2)
+
+# matplotlib
+
+# fig, axes = plt.subplots(2, sharex = True)
+
+
+# colors = ['red','green','blue','purple','orange','black','pink','yellow','grey','cyan']
+# axes[0].scatter(-1*encoded[:,0], encoded[:,1], c = labels, cmap = matplotlib.colors.ListedColormap(colors))
+# axes[1].scatter(-1*encodedVAE[:,0], encodedVAE[:,1], c = labels, cmap = matplotlib.colors.ListedColormap(colors))
+
+# plt.show()
+labels=np.array([labels])
+from ggplot import *
+import pandas
+a=np.concatenate((encoded,labels.T), axis=1)
+df= pandas.DataFrame(a,columns=['x','y','labels'])
+df.to_csv("weights/vaeout.csv")
+print type(df['labels'][0])
+print df['labels'][0], df['labels'][100], df['labels'][10], df['labels'][11]
+print df.shape
+g = ggplot(df, aes(x='x', y='y',colour = 'labels')) + \
+    geom_point(size=40, alpha=.4) 
+print g
