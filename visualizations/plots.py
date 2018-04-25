@@ -18,7 +18,7 @@ model = load_model("weights/modelcnnAE")
 # modelVAE = load_model("weights/smallVAE")
 # encoderVAE = load_model("weights/smallencoderAE")
 
-np.random.shuffle(x_test)
+
 randomimages = x_test[:10000]
 labels = y_test[:10000]
 
@@ -49,5 +49,16 @@ print type(df['labels'][0])
 print df['labels'][0], df['labels'][100], df['labels'][10], df['labels'][11]
 print df.shape
 g = ggplot(df, aes(x='x', y='y',colour = 'labels')) + \
+    geom_point(size=40, alpha=.4) 
+#print g
+
+
+df2 = pandas.read_csv("weights/vaeout.csv")
+g = ggplot(df2, aes(x='x', y='y',colour = 'labels')) + \
+    geom_point(size=40, alpha=.4) 
+print g
+
+df3 = pandas.read_csv("weights/ae.csv")
+g = ggplot(df3, aes(x='x', y='y',colour = 'labels')) + \
     geom_point(size=40, alpha=.4) 
 print g

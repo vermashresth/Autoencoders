@@ -53,19 +53,27 @@ model.compile(optimizer='adam', loss='binary_crossentropy')
 print model.summary()
 
 
-model.fit(X, X, batch_size=64, nb_epoch=1)
+model.fit(X, X, batch_size=64, nb_epoch=4)
 
 
 model.save("/media/petrichor/data/future/autoencoders/visualizations/weights/modelcnnAE")
 encoder.save("/media/petrichor/data/future/autoencoders/visualizations/weights/encodercnnAE")
 
 
-randomimages = x_test[:1000]
-labels = y_test[:1000]
+randomimages = x_test[:10000]
+labels = y_test[:10000]
 
-input = randomimages.reshape(1000,28,28,1)
+input = randomimages.reshape(10000,28,28,1)
 encoded = encoder.predict(input)
-encoded = encoded.reshape(1000,2)
+encoded = encoded.reshape(10000,2)
+
+import numpy as np
+labels=np.array([labels])
+import pandas
+a=np.concatenate((encoded,labels.T), axis=1)
+df= pandas.DataFrame(a,columns=['x','y','labels'])
+
+df.to_csv("weights/ae.csv")
 
 
 fig, axes = plt.subplots(2, sharex = True)
