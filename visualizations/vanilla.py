@@ -56,8 +56,8 @@ print model.summary()
 model.fit(X, X, batch_size=64, nb_epoch=1)
 
 
-model.save("/media/petrichor/data/future/autoencoders/visualizations/weights/model")
-encoder.save("/media/petrichor/data/future/autoencoders/visualizations/weights/encoder")
+model.save("/media/petrichor/data/future/autoencoders/visualizations/weights/modelcnnAE")
+encoder.save("/media/petrichor/data/future/autoencoders/visualizations/weights/encodercnnAE")
 
 
 randomimages = x_test[:1000]

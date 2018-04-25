@@ -11,8 +11,8 @@ x_test = x_test.astype('float32') / 255.
 X= X.reshape(60000,28,28,1)
 
 
-encoder = load_model("weights/encoder")
-model = load_model("weights/model")
+encoder = load_model("weights/encodercnnAE")
+model = load_model("weights/modelcnnAE")
 
 
 randomimages = x_test[:1000]
