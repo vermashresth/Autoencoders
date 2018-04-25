@@ -14,6 +14,9 @@ X= X.reshape(60000,28,28,1)
 encoder = load_model("weights/encodercnnAE")
 model = load_model("weights/modelcnnAE")
 
+model = load_model("weights/smallVAE")
+encoder = load_model("weights/smallencoderAE")
+
 
 randomimages = x_test[:1000]
 labels = y_test[:1000]
