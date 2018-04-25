@@ -5,6 +5,7 @@ from keras.optimizers import Adam
 from keras.regularizers import l1
 
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import keras.backend as K
 import tensorflow as tf
@@ -20,6 +21,7 @@ print X.shape
 
 
 
+
 inputs = Input(shape=(28, 28, 1))
 x = Conv2D(16, (3, 3), activation='relu', padding='same')(inputs)
 x = MaxPooling2D((2, 2), padding='same')(x)
@@ -30,13 +32,13 @@ x = MaxPooling2D((4, 4), padding='same')(x)
 x = Conv2D(2, (3, 3), activation='relu', padding='same')(x)
 encoded = MaxPooling2D((2, 2), padding='same')(x)
 
-# at this point the representation is (1, 1, 1) i.e. 128-dimensional
+# at this point the representation is (1, 1, 2) i.e. 2-dimensional
 
 x = Conv2D(2, (3, 3), activation='relu', padding='same')(encoded)
 x = UpSampling2D((2, 2))(x)
 x = Conv2D(4, (3, 3), activation='relu', padding='same')(x)
 x = UpSampling2D((4, 4))(x)
-x = Conv2D(8, (3, 3), activation='relu', padding='same	')(x)
+x = Conv2D(8, (3, 3), activation='relu', padding='same')(x)
 x = UpSampling2D((2, 2))(x)
 x = Conv2D(16, (3, 3), activation='relu')(x)
 x = UpSampling2D((2, 2))(x)
@@ -51,4 +53,24 @@ model.compile(optimizer='adam', loss='binary_crossentropy')
 print model.summary()
 
 
+model.fit(X, X, batch_size=64, nb_epoch=1)
 
+
+model.save("/media/petrichor/data/future/autoencoders/visualizations/weights/model")
+encoder.save("/media/petrichor/data/future/autoencoders/visualizations/weights/encoder")
+
+
+randomimages = x_test[:1000]
+labels = y_test[:1000]
+
+input = randomimages.reshape(1000,28,28,1)
+encoded = encoder.predict(input)
+encoded = encoded.reshape(1000,2)
+
+
+fig, axes = plt.subplots(2, sharex = True)
+
+
+colors = ['red','green','blue','purple','orange','black','pink','yellow','grey','cyan']
+axes[1].scatter(-1*encoded[:,0], encoded[:,1], c = labels, cmap = matplotlib.colors.ListedColormap(colors))
+plt.show()
