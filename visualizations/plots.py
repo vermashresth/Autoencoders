@@ -23,8 +23,8 @@ randomimages = x_test[:10000]
 labels = y_test[:10000]
 
 input = randomimages.reshape(10000,28,28,1)
-encoded = encoder.predict(input)
-encoded = encoded.reshape(10000,2)
+# encoded = encoder.predict(input)
+# encoded = encoded.reshape(10000,2)
 
 # encodedVAE = encoderVAE.predict(input)
 # encodedVAE= encodedVAE.reshape(1000,2)
@@ -39,26 +39,28 @@ encoded = encoded.reshape(10000,2)
 # axes[1].scatter(-1*encodedVAE[:,0], encodedVAE[:,1], c = labels, cmap = matplotlib.colors.ListedColormap(colors))
 
 # plt.show()
-labels=np.array([labels])
+# labels=np.array([labels])
 from ggplot import *
 import pandas
-a=np.concatenate((encoded,labels.T), axis=1)
-df= pandas.DataFrame(a,columns=['x','y','labels'])
+# a=np.concatenate((encoded,labels.T), axis=1)
+# df= pandas.DataFrame(a,columns=['x','y','labels'])
 
-print type(df['labels'][0])
-print df['labels'][0], df['labels'][100], df['labels'][10], df['labels'][11]
-print df.shape
-g = ggplot(df, aes(x='x', y='y',colour = 'labels')) + \
-    geom_point(size=40, alpha=.4) 
+# print type(df['labels'][0])
+# print df['labels'][0], df['labels'][100], df['labels'][10], df['labels'][11]
+# print df.shape
+# g = ggplot(df, aes(x='x', y='y',colour = 'labels')) + \
+#     geom_point(size=40, alpha=.4) 
 #print g
 
 
 df2 = pandas.read_csv("weights/vaeout.csv")
-g = ggplot(df2, aes(x='x', y='y',colour = 'labels')) + \
-    geom_point(size=40, alpha=.4) 
+g = ggplot(df2, aes(x='x', y='y',color = 'labels')) + \
+    geom_point(size=40, alpha=.6) + \
+    scale_color_gradient(low='#c8e234',mid ='#47ccbe', high='#cc4780')
 print g
 
 df3 = pandas.read_csv("weights/ae.csv")
-g = ggplot(df3, aes(x='x', y='y',colour = 'labels')) + \
-    geom_point(size=40, alpha=.4) 
+g = ggplot(df3, aes(x='x', y='y',color = 'labels')) + \
+    geom_point(size=40, alpha=.6)+ \
+    scale_color_gradient(low='#c8e234',mid ='#47ccbe', high='#cc4780')
 print g
