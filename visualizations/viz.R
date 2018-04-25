@@ -14,5 +14,5 @@ g2 <-ggplot(df1, aes(x, y=y, color = df1$labels)) +
   geom_point(size = 3 ,alpha=.5) +
   ggtitle("Standard Autoencoder")
 
-grid.arrange(g1, g2, ncol=1)
-
+gg=arrangeGrob(g1, g2, ncol=1)
+ggsave("/media/petrichor/data/future/autoencoders/visualizations/ggplot.jpg",gg)
